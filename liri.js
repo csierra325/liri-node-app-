@@ -53,41 +53,76 @@ function myTweets() {
     });
 };
 
-function spotifyThisSong() {
-    spotify
-        .request('https://api.spotify.com/v1/tracks/7yCPwWs66K8Ba5lFuU2bcx')
-        .then(function (data) {
-            console.log(data);
+function spotifyThisSong(songName) {
+
+    //  I need to loop through the data object based on the user input (songName) and then display the pathways given. 
+    var songName = process.argv[3];
+    songRequest = songName;
+
+    spotify.search({
+            type: "track",
+            query: songRequest
+        },
+
+        function (err, data) {
+            if (!err && data) {
+                for (var i = 0; i < 5; i++) {
+                    if (trackInfo[i]){
+                        var SpotifyResults = 
+                        "Artist: " + songInfo[i].artist[0].name;
+                        "Song: " + songInfo[i].name;
+                        "Album: " + songInfo[i].album.name;
+
+                        console.log(SpotifyResults)
+
+                    }
+                }
+            } else {
+                console.log("no song for you")
+            }
+        }
+
+    )}
+
+    function movieThis() {
+
+
+         
+        var queryUrl = "http://www.omdbapi.com/?t=" + movieName + "&y=&plot=short&apikey=bb02159f"
+   
+        request(queryUrl, function (error, response, body){
+            if (!error && response.statusCode === 200){
+                
+                var movieData =JSON.parse(body);
+                var movieResults = 
+                    "Title: " + movieData.Title + '/n' +
+                    "Year: " + movieData.Year + '/n'+
+                    "Rating: " + movieData.Ratings[0].Value + '/n' +
+                    "Rotten Tomatoes Rating: " + movieData.Ratings[1].Value + '/n' +
+                    "Origin Country: " + movieData.Country + '/n' +
+                    "Language: " + movieData.Language + '/n' +
+                    "Plot: " + movieData.Plot + '/n' +
+                    "Actors: " + movieData.Actors; 
+        
+                console.log(movieResults);
+
+            }
         })
-        .catch(function (err) {
-            console.error('Error occurred: ' + err);
-        });
-}
+   
+   
+    }
 
-function movieThis() {
+    function doWhatItsays() {
+//  Use `fs` Node package and connect to the random.txt
+// using the text inside the .txt file it will call one of the commands
+//  LIRI will take the text inside of random.txt and then use it to call one of LIRI's commands.
 
-}
 
-function doWhatItsays() {
-
-}
-
+    }
 
 
 
 
 
 
-// inquirer.prompt([
 
-//     {
-//         type: "input",
-//         name: "userInput",
-//         message: ""
-
-//     }
-// ]).then(function(command){   
-
-
-
-// })
